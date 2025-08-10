@@ -5,6 +5,7 @@ void prems(int i,vector<vector<int>>&res,vector<int>&nums){
     // base case 
     if(i==nums.size()){
         res.push_back(nums);
+        return;
     }
 
     for(int j=i;j<nums.size();j++){
