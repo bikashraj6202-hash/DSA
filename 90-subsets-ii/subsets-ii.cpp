@@ -1,30 +1,32 @@
 class Solution {
 public:
 
-void solve(vector<int>nums,vector<vector<int>>&ans ,vector<int>output,int index,int n){
-ans.push_back(output); // every case;
-    for(int i=index;i<n;i++){
-        // skip sam dublcate level
-        if(i>index && nums[i]==nums[i-1]) continue;
+void solve(vector<int>nums,vector<int>output,int i,vector<vector<int>>&ans){
+        //base case 
+     if(i>=nums.size()){
+        ans.push_back(output);
+        return;
+     }
 
-        // exclude term;
+     //include term {1,2,3},{3};
+     int element=nums[i];
+     output.push_back(element);
+     solve(nums,output,i+1,ans);
+     output.pop_back();
 
-
-//inclde term
-int element =nums[i];
-output.push_back(element);
-solve(nums,ans,output,i+1,n);
-output.pop_back();
-    }
-
+     // main part exclude me exixtkarta hai 
+     int idx=i+1;
+     while(idx<nums.size() && nums[idx]==nums[idx-1]){
+        idx++;
+     }
+     solve(nums,output,idx,ans);
 }
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
-          vector<vector<int>>ans;
-          sort(nums.begin(),nums.end());
-        int n=nums.size();
-        vector<int>output;
-        int index=0;
-        solve(nums,ans,output,index,n);
-        return ans;
+        sort(nums.begin(),nums.end());
+vector<int>output;
+vector<vector<int>>ans;
+int index=0;
+solve(nums,output,index,ans);
+return ans;
     }
 };
