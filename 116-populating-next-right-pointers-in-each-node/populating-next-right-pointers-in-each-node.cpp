@@ -19,17 +19,27 @@ public:
 class Solution {
 public:
     Node* connect(Node* root) {
-        if(root==NULL){
-            return NULL;
-        }
-        if(root->left!=NULL){
-            root->left->next=root->right;
-        }
-        if(root->right!=NULL && root->next!=NULL){
-            root->right->next=root->next->left;
-        }
-        connect(root->left);
-        connect(root->right);
+      // we solve through method of queue
+      if(root==NULL){
         return root;
+      }
+      queue<Node*>q;
+      q.push(root);
+      while(!q.empty()){
+       int n=q.size();
+       for(int i=0;i<n;i++){
+        Node* newp=q.front();
+        q.pop();
+        if(i==n-1 || q.empty()) newp->next=NULL;
+        else{newp->next=q.front();
+        }
+        if(newp->left) q.push(newp->left);
+        if(newp->right)q.push(newp->right);
+
+
+       }
+      }
+      return root;
+      
     }
 };
