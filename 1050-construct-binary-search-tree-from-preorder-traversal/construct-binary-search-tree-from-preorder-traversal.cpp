@@ -11,39 +11,27 @@
  */
 class Solution {
 public:
-int findpos(vector<int>in,int element){
-    for(int i=0;i<in.size();i++){
-        if(in[i]==element){
-            return i;
-        
-        }
-    }
-        return -1;
-    
-}
-    TreeNode* solve(vector<int>preorder,vector<int>in,int &index,int instart,int inend,int n){
-        //instart mean inordered start
-        if(index>=n || instart>inend){
+
+    TreeNode*solve(vector<int>&pre,int mini,int maxi,int &i){
+        // base case
+        if(i>=pre.size()){
             return NULL;
         }
-        int element=preorder[index++];
-        TreeNode* root=new TreeNode(element);
-        int pos=findpos(in,element);
+        // 2nd condition yadi range me nho 
+        if(pre[i]<mini || pre[i]>maxi){
+            return NULL;
+        }
+        TreeNode* root=new TreeNode(pre[i++]);
 
-        // recursive call for left;
-        root->left=solve(preorder,in,index,instart,pos-1,n);
-        root->right=solve(preorder,in,index,pos+1,inend,n);
+        root->left=solve(pre,mini,root->val,i);
+        root->right=solve(pre,root->val,maxi,i);
         return root;
-
-
     }
-    TreeNode* bstFromPreorder(vector<int>& preorder) {
-        vector<int>in; // lNR because it is in sorted form;
-        in=preorder;
-        sort(in.begin(),in.end());
-        int preindex=0;
-        int n=preorder.size();
-        TreeNode* ans=solve(preorder,in,preindex,0,n-1,n); // 0= start and n-1 end;
+    TreeNode* bstFromPreorder(vector<int>& pre) {
+        int mini=INT_MIN;
+        int maxi=INT_MAX;
+        int i=0;
+        TreeNode* ans=solve(pre,mini,maxi,i);
         return ans;
     }
 };
