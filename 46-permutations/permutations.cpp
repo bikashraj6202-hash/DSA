@@ -1,24 +1,23 @@
 class Solution {
 public:
+    
+    void solve(int i,vector<vector<int>>&res,vector<int>&nums){
+        //base case
+        if(i==nums.size()-1){
+            res.push_back(nums);
+            return;
+        }
 
-void prems(int i,vector<vector<int>>&res,vector<int>&nums){
-    // base case 
-    if(i==nums.size()){
-        res.push_back(nums);
-        return;
+        for(int j=i;j<nums.size();j++){
+            swap(nums[i],nums[j]);
+            solve(i+1,res,nums);
+            swap(nums[i],nums[j]);
+        }
     }
-
-    for(int j=i;j<nums.size();j++){
-        swap(nums[i],nums[j]);
-        prems(i+1,res,nums);
-        swap(nums[i],nums[j]);
-    }
-}
+    
     vector<vector<int>> permute(vector<int>& nums) {
-        vector<vector<int>>res;
-        prems(0,res,nums);
-        return res;
-
-
+       vector<vector<int>>res;
+       solve(0,res,nums);
+       return res; 
     }
 };
