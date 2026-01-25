@@ -15,16 +15,39 @@ public:
         if(root==NULL){
             return;
         }
-        ans.push_back(root->val);
         solve(root->left,ans);
+        ans.push_back(root->val);
         solve(root->right,ans);
     }
     
     vector<int> getAllElements(TreeNode* root1, TreeNode* root2) {
-        vector<int>ans;
-        solve(root1,ans);
-        solve(root2,ans);
-        sort(ans.begin(),ans.end());
-        return ans;
+        vector<int>v1;
+        vector<int>v2;
+        vector<int>res;
+        solve(root1,v1);
+        solve(root2,v2);
+        int i=0;
+        int j=0;
+        int n1=v1.size();
+        int n2=v2.size();
+        while(i<n1 && j<n2){
+            if(v1[i]<v2[j]){
+                res.push_back(v1[i]);
+                i++;
+            }
+            else{
+                res.push_back(v2[j]);
+                j++;
+            }
+        }
+        while(i<n1){
+            res.push_back(v1[i]);
+            i++;
+        }
+         while(j<n2){
+            res.push_back(v2[j]);
+            j++;
+        }
+        return res;
     }
 };
