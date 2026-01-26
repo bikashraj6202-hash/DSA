@@ -1,18 +1,17 @@
 class Solution {
 public:
     int maxDistinct(string s) {
-        unordered_map<char,int>mp;
-        int n=s.size();
-        int ans=0;
-        for(int i=0;i<n;i++){
-            if(mp.find(s[i])!=mp.end()){
-                continue;
+        vector<int>v(26,0);
+        int count=0;
+        for(int i=0;i<s.size();i++){
+            if(v[s[i]-'a']==0){
+                v[s[i]-'a']=1;
+                count++;
             }
-            else{
-            mp[s[i]]++;
-            ans++;
+            if(count==26){
+                break;
             }
         }
-        return ans;
+        return count;
     }
 };
