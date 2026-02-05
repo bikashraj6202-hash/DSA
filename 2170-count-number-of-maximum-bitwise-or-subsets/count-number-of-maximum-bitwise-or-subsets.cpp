@@ -9,7 +9,7 @@ public:
         return a==target;
     }
     
-    void solve(int idx,vector<vector<int>>&ans,vector<int>&nums,vector<int>&p,int target){
+    void solve(int idx,int &count,vector<int>&nums,vector<int>&p,int target){
         if(idx==nums.size()){
             return ;
         }
@@ -17,9 +17,9 @@ public:
         for(int i=idx;i<nums.size();i++){
                 p.push_back(nums[i]);
                 if(check(p,target)){
-                    ans.push_back(p);
+                   count++;
                 }
-                solve(i+1,ans,nums,p,target);  
+                solve(i+1,count,nums,p,target);  
                  p.pop_back(); 
             } 
            
@@ -27,13 +27,13 @@ public:
           
     
     int countMaxOrSubsets(vector<int>& nums) {
-        vector<vector<int>>ans;
+       int count;
         vector<int>p;
         int target=nums[0];
         for(int i=1;i<nums.size();i++){
             target|=nums[i];
         }
-        solve(0,ans,nums,p,target);
-        return  ans.size();
+        solve(0,count,nums,p,target);
+        return count;
     }
 };
