@@ -1,49 +1,48 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
+class compare {
+public:
+    bool operator()(ListNode* a, ListNode* b) {
+        return a->val > b->val;
+    }
+};
+
 class Solution {
 public:
-ListNode* mergetwolists(ListNode* list1, ListNode* list2) {
-       ListNode* dummyNode = new ListNode(-1); //initialization of dummy
-        ListNode* curr1 = list1;
-        ListNode* curr2 = list2;
-        ListNode* temp = dummyNode;
-
-        while(curr1 && curr2) {
-            if(curr1->val < curr2->val) {
-                temp->next = curr1;
-                temp = curr1;
-                curr1 = curr1->next;
-            }
-            else {
-                temp->next = curr2;
-                temp = curr2;
-                curr2 = curr2->next;
-            }
-        }
-        if(curr1) temp->next = curr1;
-        if(curr2) temp->next = curr2;
-        return dummyNode->next;
-    }
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        int n=lists.size();
-        // base case 
-        if(n==0)return nullptr;
-        ListNode*temp=NULL;
-        temp=lists[0];
-       
-        for(int i=1;i<n;i++){
-            temp=mergetwolists(temp,lists[i]);
-                
+
+        priority_queue<ListNode*, vector<ListNode*>, compare> minheap;
+
+        int k = lists.size();
+        if (k == 0) return NULL;
+
+        // push first node of each list
+        for (int i = 0; i < k; i++) {
+            if (lists[i] != NULL) {
+                minheap.push(lists[i]);
             }
-        return temp;
         }
-    
+
+        ListNode* head = NULL;
+        ListNode* tail = NULL;
+
+        while (!minheap.empty()) {
+            ListNode* top = minheap.top();
+            minheap.pop();
+
+            // push next node of the same list
+            if (top->next != NULL) {
+                minheap.push(top->next);
+            }
+
+            // add to result list
+            if (head == NULL) {
+                head = top;
+                tail = top;
+            } else {
+                tail->next = top;
+                tail = top;
+            }
+        }
+
+        return head;
+    }
 };
