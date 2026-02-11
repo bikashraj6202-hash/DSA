@@ -29,7 +29,7 @@ public:
                 pq.push(Node((float)arr[i] / arr[j], i, j));
             }
         }
-        if(pq.empty()) return {}; 
+        // if(pq.empty()) return {}; 
          while(k>1){
             pq.pop();
             k--;
