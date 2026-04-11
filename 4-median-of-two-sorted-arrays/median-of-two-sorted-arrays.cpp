@@ -27,7 +27,7 @@ public:
         }
         int n=v.size();
         if(n%2==0){
-            return (double)(v[n/2]+v[(n/2)-1])/2;
+            return (float)(v[n/2]+v[(n/2)-1])/2;
         }
         else{
             return v[n/2];
