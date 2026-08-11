@@ -1,29 +1,17 @@
 class Solution {
 public:
-    // int f(int n,vector<int>&nums,vector<int>&dp){
-    //     if(n==0){
-    //         return nums[n];
-    //     }
-    //     if (n<0)return 0;
-    //     if(dp[n]!=-1)return dp[n];
-    //     int picked=nums[n]+f(n-2,nums,dp);
-    //     int nopicked=0+f(n-1,nums,dp);
-    //     dp[n]=max(picked,nopicked);
-    //     return dp[n];
-    // }
+    int solve(int idx,vector<int>&nums,vector<int>&dp){
+        if(idx==0)return nums[idx];
+        if(idx<0)return 0;
+        if(dp[idx]!=-1)return dp[idx];
+        int p=nums[idx]+solve(idx-2,nums,dp);
+        int np=0+solve(idx-1,nums,dp);
+        dp[idx]=max(p,np);
+        return dp[idx];
+    }
     int rob(vector<int>& nums) {
-        int n=nums.size();
-        int dp[n];
-      dp[0]=nums[0];
-      int neg=0;
-      for(int i=1;i<n;i++){
-        int take=nums[i];
-        if(i>1){
-            take+=dp[i-2];
-        }
-        int nontake=0+dp[i-1];
-        dp[i]=max(take,nontake);
-      }
-      return dp[n-1];
+        int idx=nums.size()-1;
+        vector<int>dp(idx+1,-1);
+        return solve(idx,nums,dp);
     }
 };
